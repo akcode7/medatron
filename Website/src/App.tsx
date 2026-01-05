@@ -15,7 +15,9 @@ import {
   Lock,
   ArrowRight,
   Stethoscope,
-  Activity
+  Activity,
+  Menu,
+  X
 } from 'lucide-react';
 import workflowsImage from './assets/workflows.webp'
 
@@ -44,6 +46,7 @@ const RippleWaves: React.FC = () => {
 
 const App: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -51,10 +54,21 @@ const App: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [mobileMenuOpen]);
+
   return (
     <div className="min-h-screen bg-brand-bg text-white selection:bg-neon-cyan/30">
       {/* Navbar */}
-      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? 'glass py-4 shadow-lg' : 'py-6 bg-transparent'}`}>
+      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled || mobileMenuOpen ? 'glass py-4 shadow-lg' : 'py-6 bg-transparent'}`}>
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           <div className="flex items-center space-x-2 group cursor-pointer">
             <div className="w-10 h-10 bg-gradient-to-br from-neon-cyan to-neon-purple rounded-lg flex items-center justify-center neon-shadow-cyan group-hover:scale-110 transition-transform">
@@ -63,6 +77,7 @@ const App: React.FC = () => {
             <span className="text-2xl font-bold tracking-tighter gradient-text">MEDATRON</span>
           </div>
 
+          {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-400">
             <a href="#assistant" className="hover:text-neon-cyan transition-colors">Clinical Assistant</a>
             <a href="#engage" className="hover:text-neon-teal transition-colors">Engage</a>
@@ -71,7 +86,34 @@ const App: React.FC = () => {
               Book Demo
             </button>
           </div>
+
+          {/* Mobile Menu Button */}
+          <button 
+            className="md:hidden p-2 text-gray-400 hover:text-white transition-colors"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="md:hidden absolute top-full left-0 right-0 border-b border-white/5 mt-2 mx-6 rounded-xl overflow-hidden backdrop-blur-3xl bg-brand-bg/80"
+          >
+            <div className="flex flex-col space-y-0">
+              <a href="#assistant" className="px-6 py-4 hover:bg-white/5 text-gray-400 hover:text-neon-cyan transition-colors border-b border-white/5" onClick={() => setMobileMenuOpen(false)}>Clinical Assistant</a>
+              <a href="#engage" className="px-6 py-4 hover:bg-white/5 text-gray-400 hover:text-neon-teal transition-colors border-b border-white/5" onClick={() => setMobileMenuOpen(false)}>Engage</a>
+              <a href="#security" className="px-6 py-4 hover:bg-white/5 text-gray-400 hover:text-neon-purple transition-colors border-b border-white/5" onClick={() => setMobileMenuOpen(false)}>Security</a>
+              <button className="px-6 py-4 text-neon-cyan border border-neon-cyan/30 m-4 rounded-full hover:bg-neon-cyan/10 transition-all text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>
+                Book Demo
+              </button>
+            </div>
+          </motion.div>
+        )}
       </nav>
 
       {/* Hero Section */}
