@@ -313,7 +313,7 @@ const App: React.FC = () => {
             >
               <div className="relative z-10 rounded-2xl overflow-hidden border border-white/10 shadow-2xl neon-shadow-purple">
                 <img
-                  src="/C:/Users/Ankit%20Sharma/.gemini/antigravity/brain/c8ce2100-22b5-4da3-9ebf-ffc8d3bfc703/medatron_admin_dashboard_workflows_1767547518239.png"
+                  src="src/assets/workflows.webp"
                   alt="Admin Workflow Dashboard"
                   className="w-full h-auto brightness-90 hover:brightness-100 transition-all duration-500"
                 />
