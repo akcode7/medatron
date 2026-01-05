@@ -10,7 +10,6 @@ import {
   Calendar,
   ClipboardList,
   HeartPulse,
-  ChevronRight,
   Globe,
   Database,
   Lock,
