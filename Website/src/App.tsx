@@ -17,6 +17,7 @@ import {
   Stethoscope,
   Activity
 } from 'lucide-react';
+import workflowsImage from './assets/workflows.webp'
 
 const RippleWaves: React.FC = () => {
   const [ripples, setRipples] = useState<{ id: number }[]>([]);
@@ -313,7 +314,7 @@ const App: React.FC = () => {
             >
               <div className="relative z-10 rounded-2xl overflow-hidden border border-white/10 shadow-2xl neon-shadow-purple">
                 <img
-                  src="src/assets/workflows.webp"
+                  src={workflowsImage}
                   alt="Admin Workflow Dashboard"
                   className="w-full h-auto brightness-90 hover:brightness-100 transition-all duration-500"
                 />
